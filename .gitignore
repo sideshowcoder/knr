@@ -1,0 +1,11 @@
+CMakeCache.txt
+CMakeFiles/*
+src/CMakeFiles/*
+tst/CMakeFiles/*
+CTestTestfile.cmake
+Makefile
+cmake_install.cmake
+Testing/*
+tst/Testing/*
+src/knr
+tst/knr_tests
