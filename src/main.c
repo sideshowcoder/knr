@@ -1,7 +1,11 @@
-#include <stdio.h>
 #include "knr.h"
+#include <stdio.h>
 
-int main(int argc, char** argv) {
-  printf("Hello Foo %i\n", foo(1000));
+int main() {
+  knr_hello_world();
+  printf("\n");
+  knr_f_c_table();
+  printf("\n");
+  knr_c_f_table();
   return 0;
 }
