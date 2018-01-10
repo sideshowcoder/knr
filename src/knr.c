@@ -43,6 +43,7 @@ void knr_getchar_is() {
 }
 
 /* 1.7 */
+/* ./knr < knr.c -> some number */
 void knr_count_blank() {
   int blanks = 0;
   int c;
