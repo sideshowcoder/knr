@@ -12,7 +12,7 @@ void knr_hello_world() {
 void knr_f_c_table() {
   printf("%10s\t%10s\n", "fahrenheit", "celsius");
 
-  for(int f = 0; f <= 120; f += 20) {
+  for(int f = 120; f >= 0; f -= 20) {
     printf("%10.0f\t%10.1f\n", (float) f, (5.0 / 9.0) * (f - 32));
   }
 }
