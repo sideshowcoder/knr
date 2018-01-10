@@ -8,18 +8,12 @@ void knr_hello_world() {
 }
 
 /* 1.3 */
+/* modified in 1.5 original at commit d097fb4*/
 void knr_f_c_table() {
-  float f, c;
-  int lower = 0;
-  int upper = 120;
-  int step = 20;
-
-  f = lower;
   printf("%10s\t%10s\n", "fahrenheit", "celsius");
-  while (f <= upper) {
-    c = (5.0 / 9.0) * (f - 32.0);
-    printf("%10.0f\t%10.1f\n", f, c);
-    f += step;
+
+  for(int f = 0; f <= 120; f += 20) {
+    printf("%10.0f\t%10.1f\n", (float) f, (5.0 / 9.0) * (f - 32));
   }
 }
 
