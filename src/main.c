@@ -13,8 +13,13 @@ int main() {
   /* printf("\n"); */
   /* knr_getchar_is(); */
 
-  printf("\n");
-  knr_count_blank();
+  /* printf("\n"); */
+  /* knr_count_blank(); */
 
+  /* printf("\n"); */
+  /* knr_compact_blank(); */
+
+  printf("\n");
+  knr_visible_blank();
   return 0;
 }

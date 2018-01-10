@@ -34,6 +34,7 @@ void knr_c_f_table() {
 }
 
 /* 1.6 */
+/* 1.7 */
 /* ./knr < knr.c -> char is not EOF */
 /* ./knr < /dev/null -> char is EOF */
 void knr_getchar_is() {
@@ -42,7 +43,7 @@ void knr_getchar_is() {
   printf("EOF value: %i\n", EOF);
 }
 
-/* 1.7 */
+/* 1.8 */
 /* ./knr < knr.c -> some number */
 void knr_count_blank() {
   int blanks = 0;
@@ -52,4 +53,40 @@ void knr_count_blank() {
   }
 
   printf("blanks in input: %i", blanks);
+}
+
+
+/* 1.9 */
+void knr_compact_blank() {
+  int cur;
+  int prev = EOF; // never matches the beginning of a file.
+
+  while((cur = getchar()) != EOF) {
+    if(cur == ' ' || cur == '\n' || cur == '\t') {
+      if(prev != cur) {
+        printf("%c", cur);
+        prev = cur;
+      }
+    } else {
+      prev = -1;
+      printf("%c", cur);
+    }
+  }
+}
+
+/* 1.10 */
+void knr_visible_blank() {
+  int c, echo;
+  while((c = getchar()) != EOF) {
+    switch(c) {
+    case '\t':
+      printf("\\t");
+      break;
+    case '\b':
+      printf("\\b");
+      break;
+    default:
+      printf("%c", c);
+    }
+  }
 }
