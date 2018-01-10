@@ -26,9 +26,29 @@ void knr_c_f_table() {
 
   c = lower;
   printf("%10s\t%10s\n", "celsius", "fahrenheit");
-  while (c <= upper) {
+  while(c <= upper) {
     f = (9.0 / 5.0) * (c + 32.0);
     printf("%10.0f\t%10.1f\n", c, f);
     c += step;
   }
+}
+
+/* 1.6 */
+/* ./knr < knr.c -> char is not EOF */
+/* ./knr < /dev/null -> char is EOF */
+void knr_getchar_is() {
+  int v = (getchar() != EOF);
+  printf("getchar() != EOF: %i\n", v);
+  printf("EOF value: %i\n", EOF);
+}
+
+/* 1.7 */
+void knr_count_blank() {
+  int blanks = 0;
+  int c;
+  while((c = getchar()) != EOF) {
+    if(c == '\n' || c == ' ' || c == '\t') blanks++;
+  }
+
+  printf("blanks in input: %i", blanks);
 }
