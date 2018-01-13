@@ -1,5 +1,8 @@
 #include "knr.h"
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <ctype.h>
 
 /* 1.1 */
 /* 1.2 */
@@ -74,6 +77,7 @@ void knr_compact_blank() {
   }
 }
 
+
 /* 1.10 */
 void knr_visible_blank() {
   int c, echo;
@@ -90,3 +94,40 @@ void knr_visible_blank() {
     }
   }
 }
+
+/* 1.11 */
+/* Discovering bugs in the wordcount program is likely going to happen by
+ *  palying with in input char set, like UTF-8 chars. Another error source could
+ *  be multiple word seperators in a row of various types
+ *
+ * Testing could be done by either providing various input files and running
+ * them through the program on make test or likely better by swithing the method
+ * to accepting a stream of bytes and then testing directly with various inputs.
+ */
+void knr_reading_from_stream() {
+  char s[] = "this is a string";
+
+  int c;
+  FILE *ss = fmemopen(s, strlen(s), "r");
+
+  while((c = fgetc(ss)) != EOF) {
+    printf("read: %c\n", c);
+  }
+}
+
+/* 1.12 */
+void knr_one_word_per_line() {
+  int c;
+  int in_word = 1;
+  while((c = getchar()) != EOF) {
+    if(isblank(c) && in_word) {
+      in_word = 0;
+      putchar('\n');
+    } else if (!isblank(c) && c != '\n' && isalpha(c)) {
+      in_word = 1;
+      putchar(c);
+    }
+  }
+}
+
+/* 1.13 - Print histogram of words in the input */

@@ -5,3 +5,5 @@ void knr_getchar_is();
 void knr_count_blank();
 void knr_compact_blank();
 void knr_visible_blank();
+void knr_reading_from_stream();
+void knr_one_word_per_line();
