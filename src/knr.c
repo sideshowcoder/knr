@@ -172,15 +172,18 @@ void knr_word_length_histogram() {
     }
     printf("\n");
   }
+
   for(int i = 0; i < input_max_len; i++) {
     printf("%*i ", 2, i+1);
   }
 }
 
 /* 1.14 print histogram of the frequency of characters in words */
+#define ALPHABET_SIZE 27
+
 void knr_char_freq() {
   int c;
-  int freqs[27] = { 0 };
+  int freqs[ALPHABET_SIZE] = { 0 };
 
   while((c = getchar()) != EOF) {
     int _c = tolower(c);
@@ -190,12 +193,12 @@ void knr_char_freq() {
   }
 
   int max_freq = 0;
-  for(int i = 0; i < 28; i++) {
+  for(int i = 0; i <= ALPHABET_SIZE; i++) {
     if(max_freq < freqs[i]) max_freq = freqs[i];
   }
 
   for(int i = max_freq; i > -1; i--) {
-    for(int j = 0; j < 27; j++) {
+    for(int j = 0; j < ALPHABET_SIZE; j++) {
       if(freqs[j] > i) {
         printf(" x ");
       } else {
@@ -204,7 +207,6 @@ void knr_char_freq() {
     }
     printf("\n");
   }
-
 
   for(int i = 'a'; i <= 'z'; i++) {
     printf("%*c ", 2, i);
