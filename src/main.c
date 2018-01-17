@@ -25,8 +25,14 @@ int main() {
   /* printf("\n"); */
   /* knr_reading_from_stream(); */
 
+  /* printf("\n"); */
+  /* knr_one_word_per_line(); */
+
+  /* printf("\n"); */
+  /* knr_word_length_histogram(); */
+
   printf("\n");
-  knr_one_word_per_line();
+  knr_char_freq();
 
   return 0;
 }

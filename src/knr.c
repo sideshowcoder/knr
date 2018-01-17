@@ -131,3 +131,82 @@ void knr_one_word_per_line() {
 }
 
 /* 1.13 - Print histogram of words in the input */
+#define MAX_LEN 32
+
+void knr_word_length_histogram() {
+  int counts[MAX_LEN] = { 0 };
+  int len = 0;
+  int input_max_len = 0;
+  int c;
+
+  // aggregate word lengths
+  while((c = getchar()) != EOF) {
+    if((isblank(c) || c == '\n' || ispunct(c)) && len > 0) {
+       // only print histogram to for word lengths there are examples for in the input
+      if(len > input_max_len) input_max_len = len;
+
+      counts[len - 1]++;
+      len = 0;
+    } else if (!isblank(c) && c != '\n' && isalpha(c)) {
+      if(len < (MAX_LEN - 1)) { // only increment if shorter than max
+        len++;
+      }
+    }
+  }
+
+  // print histogram vertical
+  /*
+   * for(int i = 0; i < input_max_len; i++) {
+   *   printf(" %*d: %*s\n", 2, i + 1, counts[i] + 1, "=");
+   * }
+   */
+
+  // print histogram horizontal
+  for(int i = input_max_len; i > -1; i--) {
+    for(int j = 0; j < input_max_len; j++) {
+      if(counts[j] > i) {
+        printf(" x ");
+      } else {
+        printf("   ");
+      }
+    }
+    printf("\n");
+  }
+  for(int i = 0; i < input_max_len; i++) {
+    printf("%*i ", 2, i+1);
+  }
+}
+
+/* 1.14 print histogram of the frequency of characters in words */
+void knr_char_freq() {
+  int c;
+  int freqs[27] = { 0 };
+
+  while((c = getchar()) != EOF) {
+    int _c = tolower(c);
+    if('a' <= _c && _c <= 'z') {
+      freqs[_c - 'a']++;
+    }
+  }
+
+  int max_freq = 0;
+  for(int i = 0; i < 28; i++) {
+    if(max_freq < freqs[i]) max_freq = freqs[i];
+  }
+
+  for(int i = max_freq; i > -1; i--) {
+    for(int j = 0; j < 27; j++) {
+      if(freqs[j] > i) {
+        printf(" x ");
+      } else {
+        printf("   ");
+      }
+    }
+    printf("\n");
+  }
+
+
+  for(int i = 'a'; i <= 'z'; i++) {
+    printf("%*c ", 2, i);
+  }
+}

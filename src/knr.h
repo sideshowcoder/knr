@@ -7,3 +7,5 @@ void knr_compact_blank();
 void knr_visible_blank();
 void knr_reading_from_stream();
 void knr_one_word_per_line();
+void knr_word_length_histogram();
+void knr_char_freq();
