@@ -212,3 +212,14 @@ void knr_char_freq() {
     printf("%*c ", 2, i);
   }
 }
+
+
+/* 1.15 convert F to C */
+float knr_f_to_c(float f) {
+  return (5.0 / 9.0) * (f - 32);
+}
+
+/* 1.15 convert C to F */
+float knr_c_to_f(float c) {
+  return (9.0 / 5.0) * (c + 32.0);
+}

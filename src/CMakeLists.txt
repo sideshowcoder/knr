@@ -12,3 +12,5 @@ foreach(filename ${SOURCES})
 endforeach(filename ${SOURCES})
 
 add_executable(knr ${SOURCES})
+
+add_library(knr-static STATIC ${OBJECTS})

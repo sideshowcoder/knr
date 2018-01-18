@@ -4,11 +4,11 @@
 int main() {
   /* knr_hello_world(); */
 
-  /* printf("\n"); */
-  /* knr_f_c_table(); */
+  printf("\n");
+  knr_f_c_table();
 
-  /* printf("\n"); */
-  /* knr_c_f_table(); */
+  printf("\n");
+  knr_c_f_table();
 
   /* printf("\n"); */
   /* knr_getchar_is(); */
@@ -31,8 +31,8 @@ int main() {
   /* printf("\n"); */
   /* knr_word_length_histogram(); */
 
-  printf("\n");
-  knr_char_freq();
+  /* printf("\n"); */
+  /* knr_char_freq(); */
 
   return 0;
 }

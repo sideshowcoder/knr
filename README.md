@@ -3,6 +3,10 @@
 Setup for CMake and Clang adapted
 from [cmake-boilerplate](https://github.com/arunoda/cmake-boilerplate)
 
+## Ubuntu
+
+install cmake, llvm and clang
+
 ## Build
 
 ```
