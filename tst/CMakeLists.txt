@@ -3,6 +3,7 @@ include_directories(../src)
 set(CMAKE_INCLUDE_CURRENT_DIR, ON)
 
 file(GLOB TEST_SOURCES *.c)
+link_libraries("knr-static")
 
 enable_testing()
 
