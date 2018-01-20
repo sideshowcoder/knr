@@ -239,6 +239,12 @@ int knr_readline(char dest[], int maxlen) {
       copied++;
     }
   }
+  // copy the \n if possible
+  if(c == '\n' && len < (maxlen - 1)) {
+    dest[copied++] = c;
+    len++;
+  }
+
   dest[copied] = '\0';
   return len;
 }
@@ -259,5 +265,16 @@ void knr_print_longest_line(int maxlen) {
   if(max > 0) {
     printf("length: %i\n", max);
     printf("line: %s\n", maxline);
+  }
+}
+
+/* 1.17 print input lines longer than 80 chars */
+#define LINE_MAX 1000
+
+void knr_print_long_lines() {
+  char line[LINE_MAX];
+
+  while(knr_readline(line, LINE_MAX) > 0) {
+
   }
 }
