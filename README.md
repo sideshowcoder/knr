@@ -24,3 +24,15 @@ $ cmake . && make && make check
 use `make check` for verbose output `make test` to get a simple fail or success.
 
 
+## Getting irony-mode to fine the headers
+
+Irony will not by default pickup the `knr.h` header when looking at
+`knr_tests.c` to make this work cmake needs to output a `compile_commands.json`
+in the root.
+
+```
+$ cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON .
+```
+
+in the root of the project will do that, this likely does not need to be rebuild
+often.

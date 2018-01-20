@@ -10,3 +10,4 @@ tst/Testing/*
 src/knr
 tst/knr_tests
 /src/libknr-static.a
+/compile_commands.json
