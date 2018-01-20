@@ -223,3 +223,41 @@ float knr_f_to_c(float f) {
 float knr_c_to_f(float c) {
   return (9.0 / 5.0) * (c + 32.0);
 }
+
+/*
+ * 1.16 print the length of the longest line in the input and a as much of the
+ * text as possible (for argument and sanity sake lets use 80 as the max
+ * printable line length.
+ */
+int knr_readline(char dest[], int maxlen) {
+  int len, c;
+  int copied = 0;
+
+  for(len = 0; (c = getchar()) != EOF && c != '\n'; len++) {
+    if(len < (maxlen - 1)) {
+      dest[len] = c;
+      copied++;
+    }
+  }
+  dest[copied] = '\0';
+  return len;
+}
+
+
+void knr_print_longest_line(int maxlen) {
+  char line[maxlen], maxline[maxlen];
+  int max = 0;
+  int clen = 0;
+
+  while((clen = knr_readline(line, maxlen)) > 0) {
+    if(clen > max) {
+      max = clen;
+      strncpy(maxline, line, maxlen);
+    }
+  }
+
+  if(max > 0) {
+    printf("length: %i\n", max);
+    printf("line: %s\n", maxline);
+  }
+}

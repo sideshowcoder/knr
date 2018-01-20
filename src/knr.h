@@ -20,5 +20,7 @@ void knr_word_length_histogram();
 
 void knr_char_freq();
 
-float knr_f_to_c(float);
-float knr_c_to_f(float);
+float knr_f_to_c(float f);
+float knr_c_to_f(float c);
+
+void knr_print_longest_line(int maxlinelen);
