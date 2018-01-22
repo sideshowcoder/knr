@@ -221,7 +221,7 @@ float knr_f_to_c(float f) {
 
 /* 1.15 convert C to F */
 float knr_c_to_f(float c) {
-  return (9.0 / 5.0) * (c + 32.0);
+  return ((9.0 / 5.0) * c) + 32.0;
 }
 
 /*
