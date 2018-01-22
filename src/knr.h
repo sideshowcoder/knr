@@ -24,3 +24,7 @@ float knr_f_to_c(float f);
 float knr_c_to_f(float c);
 
 void knr_print_longest_line(int maxlinelen);
+
+void knr_print_long_lines();
+
+void knr_remove_trailing_whitespace();

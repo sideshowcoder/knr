@@ -36,3 +36,11 @@ $ cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON .
 
 in the root of the project will do that, this likely does not need to be rebuild
 often.
+
+## Compileing with Debug Symbols
+
+Debug information is not included by default to compile with debug symbols. 
+
+For using [LLDB see this gist](https://gist.github.com/gregmalcolm/9042234)
+and [LLDB Tutorial](https://lldb.llvm.org/tutorial.html).
+

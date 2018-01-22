@@ -273,8 +273,35 @@ void knr_print_longest_line(int maxlen) {
 
 void knr_print_long_lines() {
   char line[LINE_MAX];
+  int len = 0;
 
-  while(knr_readline(line, LINE_MAX) > 0) {
+  while((len = knr_readline(line, LINE_MAX)) > 0) {
+    if(len > 79) printf("%s", line);
+  }
+}
 
+/* 1.18 clean trailing whitespace */
+int min(int a, int b) {
+  return (a > b) ? b : a;
+}
+
+void knr_remove_trailing_whitespace() {
+  char line[LINE_MAX];
+  int len = 0;
+
+  while((len = knr_readline(line, LINE_MAX)) > 0) {
+    int i = min(len, LINE_MAX - 2); // keep room for newline and null char
+    char c;
+    char tline[LINE_MAX];
+
+    while(i > 0 && (isblank(line[i]) || line[i] == '\n' || line[i] == '\0'))
+      i--;
+
+    // copy line without the trailing whitespace
+    strncpy(tline, line, i + 1); // copy up until beginning of whitespace
+    tline[i+1] = '\n'; // terminate the line
+    tline[i+2] = '\0'; // terminate the str
+
+    if(i > 0) printf("%s", tline);
   }
 }
