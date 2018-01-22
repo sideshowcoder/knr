@@ -325,3 +325,9 @@ void knr_reverse_line_by_line() {
   while((len = knr_readline(line, LINE_MAX)) > 0)
     printf("%s", knr_reverse(line));
 }
+
+/* 1.20 detab input, replace tabs in the input with space proper number of
+   spaces to reach the next tab stop, for fixed size tabstops */
+
+/* 1.21 entab replace strings of blanks with the min number of tabs to reach
+   same spacing */
