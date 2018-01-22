@@ -305,3 +305,23 @@ void knr_remove_trailing_whitespace() {
     if(i > 0) printf("%s", tline);
   }
 }
+
+/* 1.19 reverse input line by line */
+char* knr_reverse(char s[]) {
+  char *r = (char *)malloc(strlen(s) * sizeof(char));
+
+  int j = 0;
+  for(int i = strlen(s) - 1; i >= 0; i--, j++) {
+    r[j] = s[i];
+  }
+  r[j] = '\0';
+  return r;
+}
+
+void knr_reverse_line_by_line() {
+  char line[LINE_MAX];
+  int len = 0;
+
+  while((len = knr_readline(line, LINE_MAX)) > 0)
+    printf("%s", knr_reverse(line));
+}

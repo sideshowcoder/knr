@@ -16,6 +16,10 @@ char* test_c_to_f() {
   return NULL;
 }
 
+char * test_reverse() {
+  char s1[] = "0123";
+  char *s2 = knr_reverse("3210");
+  mu_assert(strcmp(s1, s2) == 0, "expect 0123 to reverse to 3210");
   return NULL;
 }
 
@@ -23,6 +27,7 @@ char* all_tests() {
   mu_suite_start();
   mu_run_test(test_f_to_c);
   mu_run_test(test_c_to_f);
+  mu_run_test(test_reverse);
   return NULL;
 }
 

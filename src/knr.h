@@ -28,3 +28,7 @@ void knr_print_longest_line(int maxlinelen);
 void knr_print_long_lines();
 
 void knr_remove_trailing_whitespace();
+
+char* knr_reverse(char s[]);
+
+void knr_reverse_line_by_line();
