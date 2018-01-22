@@ -281,9 +281,12 @@ void knr_print_long_lines() {
 }
 
 /* 1.18 clean trailing whitespace */
-int min(int a, int b) {
-  return (a > b) ? b : a;
-}
+
+/* macro for min avoiding the risk of double evaluation */
+#define min(a,b) \
+  ({ __typeof__ (a) _a = (a); \
+     __typeof__ (b) _b = (b); \
+     _a < _b ? _a : _b; })
 
 void knr_remove_trailing_whitespace() {
   char line[LINE_MAX];
@@ -311,10 +314,9 @@ char* knr_reverse(char s[]) {
   char *r = (char *)malloc(strlen(s) * sizeof(char));
 
   int j = 0;
-  for(int i = strlen(s) - 1; i >= 0; i--, j++) {
+  for(int i = strlen(s) - 1; i >= 0; i--, j++)
     r[j] = s[i];
-  }
-  r[j] = '\0';
+  r[j] = '\0'; // terminate string
   return r;
 }
 
