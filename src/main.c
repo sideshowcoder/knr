@@ -30,7 +30,9 @@ int main() {
 
   /* knr_remove_trailing_whitespace(); */
 
-  knr_reverse_line_by_line();
+  /* knr_reverse_line_by_line(); */
+
+  knr_detab();
 
   return 0;
 }

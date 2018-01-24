@@ -32,3 +32,5 @@ void knr_remove_trailing_whitespace();
 char* knr_reverse(char s[]);
 
 void knr_reverse_line_by_line();
+
+void knr_detab();

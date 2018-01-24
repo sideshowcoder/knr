@@ -330,6 +330,39 @@ void knr_reverse_line_by_line() {
 
 /* 1.20 detab input, replace tabs in the input with space proper number of
    spaces to reach the next tab stop, for fixed size tabstops */
+#define TAB_SIZE 4
+
+
+/* prints the blanks to col returns the number of chars printed */
+static int blanks_to_col(int off) {
+  // a tab with the max possible size as spaces
+  const static char tab[TAB_SIZE] = { ' ' };
+
+  int to_col =  TAB_SIZE - (off % TAB_SIZE);
+  printf("%*s", to_col, tab);
+  return to_col;
+}
+
+void knr_detab() {
+  int c;
+  int off = 0;
+  int to_col;
+  while((c = getchar()) != EOF) {
+    switch(c) {
+    case '\n':
+      putchar(c);
+      off = 0;
+      break;
+    case '\t':
+      off += blanks_to_col(off);
+      break;
+    default:
+      off++;
+      putchar(c);
+    }
+  }
+}
+
 
 /* 1.21 entab replace strings of blanks with the min number of tabs to reach
    same spacing */
