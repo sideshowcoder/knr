@@ -394,7 +394,6 @@ void knr_entab(FILE *in, FILE *out) {
         } else {
           // could not fill up a tab, so print the spaces
           off += cons_s;
-          printf("(spaces %d)", cons_s);
 
           fprintf(out, "%*s", cons_s, TAB);
           putc(c, out);
@@ -403,7 +402,6 @@ void knr_entab(FILE *in, FILE *out) {
 
         if(cons_s == to_col) {
           off = 0;
-          printf("(printing tab)");
           putc('\t', out);
           break;
         }

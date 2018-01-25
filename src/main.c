@@ -35,11 +35,11 @@ int main() {
 
   /* knr_detab(); */
 
-  static char* s = "hello     world\nhello   world\n";
-  FILE *in = fmemopen((void*)s, strlen(s), "r");
+  /* static char* s = "hello     world\nhello   world\n"; */
+  /* FILE *in = fmemopen((void*)s, strlen(s), "r"); */
 
-  knr_entab(in, stdout);
-  /* knr_entab(stdin, stdout); */
+  /* knr_entab(in, stdout); */
+  knr_entab(stdin, stdout);
 
   return 0;
 }
