@@ -1,5 +1,6 @@
 #include "knr.h"
 #include <stdio.h>
+#include <string.h>
 
 int main() {
   /* knr_hello_world(); */
@@ -32,7 +33,13 @@ int main() {
 
   /* knr_reverse_line_by_line(); */
 
-  knr_detab();
+  /* knr_detab(); */
+
+  static char* s = "hello     world\nhello   world\n";
+  FILE *in = fmemopen((void*)s, strlen(s), "r");
+
+  knr_entab(in, stdout);
+  /* knr_entab(stdin, stdout); */
 
   return 0;
 }

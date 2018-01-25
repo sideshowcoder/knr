@@ -1,3 +1,5 @@
+#include <stdio.h>
+
 void knr_hello_world();
 
 void knr_f_c_table();
@@ -34,3 +36,5 @@ char* knr_reverse(char s[]);
 void knr_reverse_line_by_line();
 
 void knr_detab();
+
+void knr_entab(FILE *in, FILE *out);

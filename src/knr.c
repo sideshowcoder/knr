@@ -1,5 +1,5 @@
 #include "knr.h"
-#include <stdio.h>
+
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
@@ -331,22 +331,18 @@ void knr_reverse_line_by_line() {
 /* 1.20 detab input, replace tabs in the input with space proper number of
    spaces to reach the next tab stop, for fixed size tabstops */
 #define TAB_SIZE 4
-
+const static char TAB[TAB_SIZE] = { ' ' };
 
 /* prints the blanks to col returns the number of chars printed */
 static int blanks_to_col(int off) {
-  // a tab with the max possible size as spaces
-  const static char tab[TAB_SIZE] = { ' ' };
-
   int to_col =  TAB_SIZE - (off % TAB_SIZE);
-  printf("%*s", to_col, tab);
+  printf("%*s", to_col, TAB);
   return to_col;
 }
 
 void knr_detab() {
   int c;
   int off = 0;
-  int to_col;
   while((c = getchar()) != EOF) {
     switch(c) {
     case '\n':
@@ -366,3 +362,56 @@ void knr_detab() {
 
 /* 1.21 entab replace strings of blanks with the min number of tabs to reach
    same spacing */
+
+// todo deal with mixed tab and space
+// todo deal with utf-8
+void knr_entab(FILE *in, FILE *out) {
+  int c;
+  int off = 0;
+  int to_col;
+  int cons_s;
+  while((c = getc(in)) != EOF) {
+    switch(c) {
+    case '\n':
+      putc(c, out);
+      off = 0;
+      break;
+    case ' ':
+      // spaces until we have a tab
+      to_col = TAB_SIZE - (off % TAB_SIZE);
+      if (to_col == 0) to_col = TAB_SIZE;
+
+      cons_s = 0; // conseq spaces found so far
+
+      do {
+        if(c == '\n' || c == EOF) {
+          fprintf(out, "%*s", cons_s, TAB);
+          // deal with in the outer loop
+          ungetc(c, in);
+          break;
+        } else if(c == ' ') {
+          cons_s++;
+        } else {
+          // could not fill up a tab, so print the spaces
+          off += cons_s;
+          printf("(spaces %d)", cons_s);
+
+          fprintf(out, "%*s", cons_s, TAB);
+          putc(c, out);
+          break;
+        }
+
+        if(cons_s == to_col) {
+          off = 0;
+          printf("(printing tab)");
+          putc('\t', out);
+          break;
+        }
+      } while((c = getc(in)));
+      break;
+    default:
+      off++;
+      putc(c, out);
+    }
+  }
+}
