@@ -35,10 +35,10 @@ int main() {
 
   /* knr_detab(); */
 
+  /* TODO make this a testcase! */
   /* static char* s = "s     m     e"; */
   /* FILE *in = fmemopen((void*)s, strlen(s), "r"); */
   /* knr_entab(in, stdout); */
-
   knr_entab(stdin, stdout);
 
   return 0;
