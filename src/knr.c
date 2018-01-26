@@ -363,7 +363,6 @@ void knr_detab() {
 /* 1.21 entab replace strings of blanks with the min number of tabs to reach
    same spacing */
 
-// todo deal with mixed tab and space
 // todo deal with utf-8
 void knr_entab(FILE *in, FILE *out) {
   int c;
@@ -376,6 +375,10 @@ void knr_entab(FILE *in, FILE *out) {
       putc(c, out);
       off = 0;
       break;
+    case '\t':
+      off = 0;
+      putc(c, out);
+      break;
     case ' ':
       // spaces until we have a tab
       to_col = TAB_SIZE - (off % TAB_SIZE);
@@ -384,7 +387,7 @@ void knr_entab(FILE *in, FILE *out) {
       cons_s = 0; // conseq spaces found so far
 
       do {
-        if(c == '\n' || c == EOF) {
+        if(c == '\n' || c == '\t' || c == EOF) {
           fprintf(out, "%*s", cons_s, TAB);
           // deal with in the outer loop
           ungetc(c, in);
@@ -394,9 +397,8 @@ void knr_entab(FILE *in, FILE *out) {
         } else {
           // could not fill up a tab, so print the spaces
           off += cons_s;
-
           fprintf(out, "%*s", cons_s, TAB);
-          putc(c, out);
+          ungetc(c, in);
           break;
         }
 
