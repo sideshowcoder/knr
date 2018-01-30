@@ -39,7 +39,12 @@ int main() {
   /* static char* s = "s     m     e"; */
   /* FILE *in = fmemopen((void*)s, strlen(s), "r"); */
   /* knr_entab(in, stdout); */
-  knr_entab(stdin, stdout);
+
+  /* knr_entab(stdin, stdout); */
+
+  static char* s = "abcd abcd";
+  FILE *in = fmemopen((void*)s, strlen(s), "r");
+  knr__fold_lines(in, stdout, 4);
 
   return 0;
 }

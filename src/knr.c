@@ -415,3 +415,59 @@ void knr_entab(FILE *in, FILE *out) {
     }
   }
 }
+
+
+/* 1.22 fold long lines, be smart about lines without blanks */
+#define COLUMNS_PER_LINE 80
+
+void knr_fold_lines() {
+  knr_fold_lines(stdin, stdout, COLUMNS_PER_LINE);
+}
+
+void knr__fold_lines(FILE* in, FILE* out, int cols) {
+  int loff = 0;
+  int soff = -1; // last blank found to break at
+  char buff[cols + 2]; // chars + newline + null
+  memset(buff, 0, sizeof(buff));
+  char line[cols + 2]; // chars + newline + null
+  memset(line, 0, sizeof(line));
+  int c;
+
+  while((c = fgetc(in)) != EOF) {
+    loff++;
+
+    if(c == '\n') {
+      // write buffer to out with newline
+      buff[loff] = '\n';
+      buff[loff + 1] = '\0';
+      fputs(buff, out);
+      loff = 0;
+      soff = -1;
+      continue;
+    }
+
+    if(isblank(c)) soff = loff;
+    buff[loff - 1] = c;
+
+    if(loff > cols) { // need to break line
+      if(soff != -1) {
+        strncpy(line, buff, soff - 1);
+        line[soff] = '\n';
+        /* TODO this is wrong .. we need to take everything past the last
+         * whitespace copy it to the beginning of the buffer and set the line
+         * offset to however much was left past the last space
+         */
+        loff = soff;
+      } else {
+        /* TODO We should be smart about breaking the line without spaces in it,
+         * to mark the line as continuous indent by 1 tab
+         */
+        strncpy(line, buff, loff - 1);
+        line[loff] = '\n';
+        loff = 0;
+      }
+      soff = -1;
+      fputs(line, out);
+    }
+  }
+}

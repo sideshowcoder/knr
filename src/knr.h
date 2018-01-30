@@ -38,3 +38,7 @@ void knr_reverse_line_by_line();
 void knr_detab();
 
 void knr_entab(FILE *in, FILE *out);
+
+void knr_fold_lines();
+
+void knr__fold_lines(FILE* in, FILE* out, int cols);

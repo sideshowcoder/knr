@@ -16,10 +16,26 @@ char* test_c_to_f() {
   return NULL;
 }
 
-char * test_reverse() {
+char* test_reverse() {
   char s1[] = "0123";
   char *s2 = knr_reverse("3210");
   mu_assert(strcmp(s1, s2) == 0, "expect 0123 to reverse to 3210");
+  return NULL;
+}
+
+char* test_fold_lines() {
+  char expected[] = "abcd\nabcd";
+  char actual[10];
+
+  char *test = "abcd abcd";
+  FILE *in = fmemopen((void *)test, strlen(test), "r");
+  FILE *out = fmemopen((void *)actual, sizeof(actual), "w");
+
+  knr__fold_lines(in, out, 4);
+
+  fclose(out);
+  log_info("expected '%s' actual '%s'", expected, actual);
+  mu_assert(strcmp(expected, actual), "expected 'abcd abcd' to be split after first 'abcd'");
   return NULL;
 }
 
@@ -28,6 +44,7 @@ char* all_tests() {
   mu_run_test(test_f_to_c);
   mu_run_test(test_c_to_f);
   mu_run_test(test_reverse);
+  mu_run_test(test_fold_lines);
   return NULL;
 }
 
