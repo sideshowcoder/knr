@@ -39,7 +39,15 @@ often.
 
 ## Compileing with Debug Symbols
 
-Debug information is not included by default to compile with debug symbols. 
+Debug information is included by default via
+
+```
+set(CMAKE_BUILD_TYPE Debug)
+```
+
+in the `./CMakeLists.txt`. For more
+on
+[CMake and debug](https://bytefreaks.net/programming-2/cc-how-do-you-set-gdb-debug-flag-g-with-cmake)
 
 For using [LLDB see this gist](https://gist.github.com/gregmalcolm/9042234)
 and [LLDB Tutorial](https://lldb.llvm.org/tutorial.html).
