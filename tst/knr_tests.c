@@ -24,18 +24,41 @@ char* test_reverse() {
 }
 
 char* test_fold_lines() {
-  char expected[] = "abcd\nabcd";
-  char actual[10];
+  const int ninputs = 4;
 
-  char *test = "abcd abcd";
-  FILE *in = fmemopen((void *)test, strlen(test), "r");
-  FILE *out = fmemopen((void *)actual, sizeof(actual), "w");
+  /*
+   * TODO cleanup the code
+   * TODO deal with trailing whitespace at the end of the line before linebreak
+   * TODO columns are 0 indexed which is awkward
+   * TODO indent lines split not at a space to mark continuation
+   */
 
-  knr__fold_lines(in, out, 4);
+  const char* expected[ninputs];
+  expected[0] = "abcd\nabcd";
+  expected[1] = "abc\nabcd";
+  expected[2] = "ab\ncda";
+  expected[3] = "abcda\nbcd";
 
-  fclose(out);
-  log_info("expected '%s' actual '%s'", expected, actual);
-  mu_assert(strcmp(expected, actual), "expected 'abcd abcd' to be split after first 'abcd'");
+  const char* inputs[ninputs];
+  inputs[0] = "abcd abcd"; // break line at paragraph matching space
+  inputs[1] = "abc\nabcd"; // given linebreak already present
+  inputs[2] = "ab cda"; // given space before paragraph end
+  inputs[3] = "abcdabcd"; // no space given break at column... no this is not smart
+
+  char actual[256] = { 0 }; // buff with room results
+
+  for(int i = 0; i < ninputs; i++) {
+    memset(actual, 0, sizeof(actual)); // reset actual buffer
+    FILE *in = fmemopen((void *)inputs[i], strlen(inputs[i]), "r");
+    FILE *out = fmemopen((void *)actual, sizeof(actual), "w");
+
+    knr__fold_lines(in, out, 4);
+    fclose(out);
+
+    log_info("expected '%s' actual '%s'", expected[i], actual);
+    mu_assert(strcmp(expected[i], actual) == 0, "expected input to be split correctly");
+  }
+
   return NULL;
 }
 

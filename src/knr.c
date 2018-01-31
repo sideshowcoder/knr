@@ -438,8 +438,8 @@ void knr__fold_lines(FILE* in, FILE* out, int cols) {
 
     if(c == '\n') {
       // write buffer to out with newline
-      buff[loff] = '\n';
-      buff[loff + 1] = '\0';
+      buff[loff - 1] = '\n';
+      buff[loff] = '\0';
       fputs(buff, out);
       loff = 0;
       soff = -1;
@@ -451,23 +451,24 @@ void knr__fold_lines(FILE* in, FILE* out, int cols) {
 
     if(loff > cols) { // need to break line
       if(soff != -1) {
-        strncpy(line, buff, soff - 1);
-        line[soff] = '\n';
-        /* TODO this is wrong .. we need to take everything past the last
-         * whitespace copy it to the beginning of the buffer and set the line
-         * offset to however much was left past the last space
-         */
-        loff = soff;
+        strncpy(line, buff, soff);
+        line[soff - 1] = '\n';
+
+        int nleft = cols + 1 - soff;
+        memcpy(buff, &buff[soff], nleft); // copy the chars after soff to beginning
+        loff = nleft;
       } else {
-        /* TODO We should be smart about breaking the line without spaces in it,
-         * to mark the line as continuous indent by 1 tab
-         */
-        strncpy(line, buff, loff - 1);
         line[loff] = '\n';
+        strncpy(line, buff, loff);
         loff = 0;
       }
+
       soff = -1;
       fputs(line, out);
     }
   }
+
+  // always put the last line
+  buff[loff] = '\0';
+  fputs(buff, out);
 }

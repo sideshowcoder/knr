@@ -42,9 +42,10 @@ int main() {
 
   /* knr_entab(stdin, stdout); */
 
-  static char* s = "abcd abcd";
+  static char* s = "ab cda";
   FILE *in = fmemopen((void*)s, strlen(s), "r");
   knr__fold_lines(in, stdout, 4);
+  fflush(stdout);
 
   return 0;
 }
