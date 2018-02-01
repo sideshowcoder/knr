@@ -28,9 +28,8 @@ char* test_fold_lines() {
 
   /*
    * TODO cleanup the code
-   * TODO deal with trailing whitespace at the end of the line before linebreak
    * TODO columns are 0 indexed which is awkward
-   * TODO indent lines split not at a space to mark continuation
+   * TODO indent lines split not at a space to mark continuation indent by one tab (?)
    */
 
   const char* expected[ninputs];
