@@ -416,7 +416,6 @@ void knr_entab(FILE *in, FILE *out) {
   }
 }
 
-
 /* 1.22 fold long lines, be smart about lines without blanks */
 #define COLUMNS_PER_LINE 80
 
@@ -425,8 +424,8 @@ void knr_fold_lines() {
 }
 
 void knr__fold_lines(FILE* in, FILE* out, int cols) {
-  int loff = 0;
-  int soff = -1; // last blank found to break at
+  int line_offset = 0;
+  int blank_offset = -1; // last blank found to break at
   char buff[cols + 2]; // chars + newline + null
   memset(buff, 0, sizeof(buff));
   char line[cols + 2]; // chars + newline + null
@@ -434,41 +433,42 @@ void knr__fold_lines(FILE* in, FILE* out, int cols) {
   int c;
 
   while((c = fgetc(in)) != EOF) {
-    loff++;
-
     if(c == '\n') {
       // write buffer to out with newline
-      buff[loff - 1] = '\n';
-      buff[loff] = '\0';
+      buff[line_offset] = '\n';
+      buff[line_offset + 1] = '\0';
       fputs(buff, out);
-      loff = 0;
-      soff = -1;
+      line_offset = 0;
+      blank_offset = -1;
       continue;
     }
 
-    if(isblank(c)) soff = loff;
-    buff[loff - 1] = c;
+    if(isblank(c)) blank_offset = line_offset;
+    buff[line_offset] = c;
 
-    if(loff > cols) { // need to break line
-      if(soff != -1) {
-        strncpy(line, buff, soff);
-        line[soff - 1] = '\n';
+    if(line_offset >= cols) { // need to break line
+      if(blank_offset != -1) {
+        strncpy(line, buff, blank_offset + 1);
+        line[blank_offset] = '\n';
 
-        int nleft = cols + 1 - soff;
-        memcpy(buff, &buff[soff], nleft); // copy the chars after soff to beginning
-        loff = nleft;
+        int nleft = cols - blank_offset;
+        memcpy(buff, &buff[blank_offset + 1], nleft); // copy the chars after blank_offset to beginning
+        line_offset = nleft;
+        blank_offset = -1;
+        fputs(line, out);
       } else {
-        line[loff] = '\n';
-        strncpy(line, buff, loff);
-        loff = 0;
+        line[line_offset + 1] = '\n';
+        strncpy(line, buff, line_offset + 1);
+        line_offset = 0;
+        blank_offset = -1;
+        fputs(line, out);
       }
-
-      soff = -1;
-      fputs(line, out);
+    } else {
+      line_offset++;
     }
   }
 
   // always put the last line
-  buff[loff] = '\0';
+  buff[line_offset] = '\0';
   fputs(buff, out);
 }
